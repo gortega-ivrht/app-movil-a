@@ -41,4 +41,45 @@ class UserDao (context: Context){
 
         return users
     }
+
+    // sesion6 cursores
+    fun getUsersFilter(nameFilter:String):List<User>{
+        val db = dbHelper.readableDatabase
+        // select id,name from users
+        //where name LIKE '%g%'
+        //order by id DESC
+
+        //gean,igean,maria, mafer, pedro
+        val projection =  arrayOf("id","name")
+        val selection = "name LIKE ?"
+        val selectionArgs = arrayOf("$nameFilter%")
+        val orderBy = "id DESC"
+
+        val users = mutableListOf<User>()
+
+        val cursor : Cursor = db.query("users",
+                                        projection,
+                                        selection,
+                                        selectionArgs,
+                                        null,
+                                        null,
+                                        orderBy
+                                        )
+
+        if (cursor.moveToFirst()){
+            do {
+              //lógica
+                val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
+                val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+
+                //procesar los datos obtenidos
+                users.add(User(id,name))
+            }while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return users
+    }
+
 }
