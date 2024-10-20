@@ -9,7 +9,7 @@ class UserDatabaseHelper (context: Context) : SQLiteOpenHelper(context,DATABASE_
 
     companion object{
         private const val DATABASE_NAME = "user_database.bd"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 4
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -17,12 +17,15 @@ class UserDatabaseHelper (context: Context) : SQLiteOpenHelper(context,DATABASE_
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        /*db.execSQL("DROP TABLE IF EXISTS users")
-        onCreate(db)*/
-        Log.d("oldVersion",oldVersion.toString())
-        if (oldVersion < 5){
+        db.execSQL("DROP TABLE IF EXISTS users")
+        onCreate(db)
+        Log.d("SEGUIMIENTO oldVersion",oldVersion.toString())
+        Log.d("SEGUIMIENTO newVersion",newVersion.toString())
+        if (oldVersion < newVersion){
             Log.d("onUpgrade","Agregando la columna email en la versión 2")
             db.execSQL("ALTER TABLE users ADD COLUMN email TEXT DEFAULT 'sin email'")
+            db.execSQL("ALTER TABLE users ADD COLUMN phone TEXT DEFAULT 'sin phone'")
+
         }
     }
 

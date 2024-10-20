@@ -37,9 +37,9 @@ fun Persistencia (userViewModel: UserViewModel){
     val userList by userViewModel.userList.collectAsState()
     var showSuccessMessage by remember { mutableStateOf(false)  }
 
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         userViewModel.loadUsers()
-    }
+    }*/
 
     Column (
         modifier = Modifier.fillMaxSize(),

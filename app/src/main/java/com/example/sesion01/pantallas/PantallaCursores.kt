@@ -121,6 +121,7 @@ fun UserRow(user: User,onDelete: (Long) -> Unit, onUpdate: (Long, String) -> Uni
         }else{
             Text(text = user.name, modifier = Modifier.weight(2f))
             Text(text = user.email, modifier = Modifier.weight(2f))
+            Text(text = user.phone, modifier = Modifier.weight(2f))
             Button(
                 onClick = { isEditing = true},
                 modifier = Modifier.padding(start = 4.dp),
